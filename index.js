@@ -1,8 +1,8 @@
-var fs = require("fs"),             // load STLs from filesystem
-    request = require("request"),   // load STLs from urls
-    THREE = require("three"),     
-    Canvas = require("canvas"),
-    _ = require("lodash");
+const fs = require("fs");             // load STLs from filesystem
+const request = require("request");   // load STLs from urls
+const THREE = require("three");     
+const { createCanvas, Image } = require("canvas");
+const _ = require("lodash");
 
 // Assign this to global so that the subsequent modules can extend it:
 global.THREE = THREE;
@@ -122,9 +122,9 @@ StlThumbnailer.prototype.processThumbnail = function(thumbnailSpec){
             global.document = {
                 createElement: function (tag) {
                     if (tag === "img") {
-                        return new Canvas.Image();
+                        return new Image();
                     } else if (tag === "canvas") {
-                        return new Canvas(width, height);
+                        return createCanvas(width, height);
                     }
                 },
                 createElementNS: function(namespace,tag){
@@ -227,7 +227,7 @@ StlThumbnailer.prototype.loadTexture = function(path){
     var isJPEG = jpegPath.search( /\.(jpg|jpeg)$/ ) > 0 || url.search( /^data\:image\/jpeg/ ) === 0;
 
     var textureImage = fs.readFileSync(jpegPath);
-    var img = new Canvas.Image;
+    var img = Image;
     img.src = textureImage;
 
     texture.format = isJPEG ? THREE.RGBFormat : THREE.RGBAFormat;

@@ -35,11 +35,12 @@ The code below creates a simple express-based web service that accepts the url o
 
 ```javascript
 // index.js
-var StlThumbnailer = require('node-stl-thumbnailer');
-var app = require("express")();
+const { Canvas } = require("canvas");
+const app = require("express")();
+const StlThumbnailer = require("./index");
 
 app.get('/thumbnailer', function(req, res, next) {
-    var thumbnailer = new StlThumbnailer({
+    const thumbnailer = new StlThumbnailer({
         url: req.query.url,           // url OR filePath must be supplied, but not both
         //filePath: "...",            // load file from filesystem
         requestThumbnails: [
@@ -52,7 +53,10 @@ app.get('/thumbnailer', function(req, res, next) {
     .then(function(thumbnails){
           // thumbnails is an array (in matching order to your requests) of Canvas objects
           // you can write them to disk, return them to web users, etc
-          thumbnails[0].toBuffer(function(err, buf){      
+          thumbnails[0].toBuffer(function(err, buf){   
+              if (err) {
+            throw err;
+          }   
           res.contentType('image/png');
           res.send(buf)
         })
