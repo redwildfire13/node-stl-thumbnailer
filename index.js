@@ -9,6 +9,8 @@ global.THREE = THREE;
 require("./threejs-extras/Projector.js");
 require("./threejs-extras/CanvasRenderer.js");
 require("./threejs-extras/STLLoader.js");
+//require("three/examples/js/renderers/Projector");
+// require("three/examples/js/loaders/STLLoader");
 
 function StlThumbnailer(options){
     // we need a url or a filePath to get started
